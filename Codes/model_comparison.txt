@@ -1,0 +1,37 @@
+
+======================================================================
+           UNIFIED MODEL COMPARISON  (CC + SNe + BAO + FRB)           
+                           Reference: LCDM                            
+======================================================================
+
+  --- Statistics ---
+                LCDM        wCDM         CPL
+Quantity                                    
+k                  6           7           8
+ln L_max  -1384.0483  -1380.8632  -1379.7850
+chi2       2768.0966   2761.7264   2759.5700
+chi2/dof      1.5964      1.5936      1.5933
+AIC        2780.0967   2775.7263   2775.5699
+BIC        2812.8665   2813.9578   2819.2630
+
+----------------------------------------------------------------------
+
+  --- Differences vs LCDM ---
+           LCDM     wCDM      CPL
+Quantity                         
+delta_k       —        1        2
+Delta ln L    —  +3.1851  +4.2633
+Delta AIC     —  -4.3704  -4.5268
+Delta BIC     —  +1.0913  +6.3965
+ln BF         —  -0.5457  -3.1982
+
+----------------------------------------------------------------------
+
+  --- Verdicts ---
+                  LCDM                          wCDM                           CPL
+Quantity                                                                          
+AIC verdict  Reference  Considerable for alternative  Considerable for alternative
+BIC verdict  Reference               Not significant    Strong against alternative
+LRT verdict  Reference       p = 0.0116  significant       p = 0.0141  significant
+
+======================================================================
