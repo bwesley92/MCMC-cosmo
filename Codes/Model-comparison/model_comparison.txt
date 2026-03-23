@@ -1,0 +1,38 @@
+
+================================================================================
+                UNIFIED MODEL COMPARISON  (CC + SNe + BAO + FRB)                
+                                Reference: LCDM                                 
+       AB (Unif) = uniform prior on b  |  AB (Jeff) = Jeffreys prior on b       
+================================================================================
+
+  --- Statistics ---
+                LCDM        wCDM         CPL AB (b uniform) AB (b Jeffreys) HS (mu_HS uniform)
+Quantity                                                                                      
+k                  6           7           8              7               7                  7
+ln L_max  -1384.1466  -1381.1571  -1379.8901     -1384.2041      -1384.2662         -1380.4346
+chi2       2768.2932   2762.3142   2759.7802      2768.4082       2768.5324          2760.8692
+chi2/dof      1.5965      1.5939      1.5934         1.5975          1.5975             1.5931
+AIC        2780.2932   2776.3141   2775.7801      2782.4082       2782.5324          2774.8691
+BIC        2813.0631   2814.5456   2819.4733      2820.6397       2820.7639          2813.1006
+
+--------------------------------------------------------------------------------
+
+  --- Differences vs LCDM ---
+           LCDM     wCDM      CPL AB (b uniform) AB (b Jeffreys) HS (mu_HS uniform)
+Quantity                                                                           
+delta_k       —        1        2              1               1                  1
+Delta ln L    —  +2.9895  +4.2565        -0.0575         -0.1196            +3.7120
+Delta AIC     —  -3.9791  -4.5131        +2.1150         +2.2392            -5.4241
+Delta BIC     —  +1.4825  +6.4102        +7.5766         +7.7008            +0.0375
+ln BF         —  -0.7413  -3.2051        -3.7883         -3.8504            -0.0188
+
+--------------------------------------------------------------------------------
+
+  --- Verdicts ---
+                  LCDM                      wCDM                           CPL               AB (b uniform)              AB (b Jeffreys)            HS (mu_HS uniform)
+Quantity                                                                                                                                                              
+AIC verdict  Reference  Positive for alternative  Considerable for alternative       Positive for reference       Positive for reference  Considerable for alternative
+BIC verdict  Reference           Not significant    Strong against alternative   Strong against alternative   Strong against alternative               Not significant
+LRT verdict  Reference   p = 0.0145  significant       p = 0.0142  significant  p = 1.0000  not significant  p = 1.0000  not significant       p = 0.0064  significant
+
+================================================================================
