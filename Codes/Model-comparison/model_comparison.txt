@@ -6,33 +6,33 @@
 ================================================================================
 
   --- Statistics ---
-                LCDM        wCDM         CPL AB (b uniform) AB (b Jeffreys) HS (mu_HS uniform)
-Quantity                                                                                      
-k                  6           7           8              7               7                  7
-ln L_max  -1384.1466  -1381.1571  -1379.8901     -1384.2041      -1384.2662         -1380.4346
-chi2       2768.2932   2762.3142   2759.7802      2768.4082       2768.5324          2760.8692
-chi2/dof      1.5965      1.5939      1.5934         1.5975          1.5975             1.5931
-AIC        2780.2932   2776.3141   2775.7801      2782.4082       2782.5324          2774.8691
-BIC        2813.0631   2814.5456   2819.4733      2820.6397       2820.7639          2813.1006
+                LCDM        wCDM         CPL          AB          HS          ST
+Quantity                                                                        
+k                  6           7           8           7           7           7
+ln L_max  -1383.4191  -1378.4736  -1378.1263  -1383.5411  -1378.6458  -1378.4837
+chi2       2766.8382   2756.9472   2756.2526   2767.0822   2757.2916   2756.9674
+chi2/dof      1.5956      1.5909      1.5914      1.5967      1.5911      1.5909
+AIC        2778.8383   2770.9472   2772.2526   2781.0822   2771.2916   2770.9675
+BIC        2811.6081   2809.1786   2815.9458   2819.3136   2809.5231   2809.1990
 
 --------------------------------------------------------------------------------
 
   --- Differences vs LCDM ---
-           LCDM     wCDM      CPL AB (b uniform) AB (b Jeffreys) HS (mu_HS uniform)
-Quantity                                                                           
-delta_k       —        1        2              1               1                  1
-Delta ln L    —  +2.9895  +4.2565        -0.0575         -0.1196            +3.7120
-Delta AIC     —  -3.9791  -4.5131        +2.1150         +2.2392            -5.4241
-Delta BIC     —  +1.4825  +6.4102        +7.5766         +7.7008            +0.0375
-ln BF         —  -0.7413  -3.2051        -3.7883         -3.8504            -0.0188
+           LCDM     wCDM      CPL       AB       HS       ST
+Quantity                                                    
+delta_k       —        1        2        1        1        1
+Delta ln L    —  +4.9455  +5.2928  -0.1220  +4.7733  +4.9354
+Delta AIC     —  -7.8911  -6.5857  +2.2439  -7.5467  -7.8708
+Delta BIC     —  -2.4295  +4.3377  +7.7055  -2.0850  -2.4091
+ln BF         —  +1.2147  -2.1689  -3.8528  +1.0425  +1.2045
 
 --------------------------------------------------------------------------------
 
   --- Verdicts ---
-                  LCDM                      wCDM                           CPL               AB (b uniform)              AB (b Jeffreys)            HS (mu_HS uniform)
-Quantity                                                                                                                                                              
-AIC verdict  Reference  Positive for alternative  Considerable for alternative       Positive for reference       Positive for reference  Considerable for alternative
-BIC verdict  Reference           Not significant    Strong against alternative   Strong against alternative   Strong against alternative               Not significant
-LRT verdict  Reference   p = 0.0145  significant       p = 0.0142  significant  p = 1.0000  not significant  p = 1.0000  not significant       p = 0.0064  significant
+                  LCDM                          wCDM                           CPL                           AB                            HS                            ST
+Quantity                                                                                                                                                                   
+AIC verdict  Reference  Considerable for alternative  Considerable for alternative       Positive for reference  Considerable for alternative  Considerable for alternative
+BIC verdict  Reference      Positive for alternative  Positive against alternative   Strong against alternative      Positive for alternative      Positive for alternative
+LRT verdict  Reference       p = 0.0017  significant       p = 0.0050  significant  p = 1.0000  not significant       p = 0.0020  significant       p = 0.0017  significant
 
 ================================================================================
