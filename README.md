@@ -1,215 +1,70 @@
-# MCMC R2-AB Cosmological Model
+# MCMC-cosmo
 
-A comprehensive Python implementation for constraining cosmological parameters using Markov Chain Monte Carlo (MCMC) methods with the R2-AB modified gravity model.
+Bayesian parameter estimation for cosmological models, using MCMC (`emcee`) to confront six expansion-history models against four observational probes — Cosmic Chronometers (CC), Type Ia Supernovae (Pantheon+SH0ES), DESI BAO DR2, and Fast Radio Burst (FRB) dispersion measures — individually and in combination, followed by a unified model comparison (AIC/BIC/LRT) and Figure-of-Merit analysis.
 
-## Overview
+## Models
 
-This project implements a Bayesian parameter estimation framework to constrain cosmological parameters using multiple observational datasets:
-- **SNe Ia**: Type Ia Supernovae data (Pantheon+SH0ES)
-- **CC**: Cosmic Chronometer data
-- **RSD**: Redshift Space Distortions data
+**GR-based** (`Codes/GR-based/`) — standard dark-energy parametrizations on top of GR:
 
-The code solves modified Friedmann equations for the R2-AB gravity model and performs statistical analysis to determine the best-fit parameters and their uncertainties.
+| Model | Expansion history | Free parameters |
+|-------|--------------------|------------------|
+| `LCDM` | Flat ΛCDM: `E(z) = sqrt(Ωm0(1+z)³ + (1-Ωm0))` | `H0`, `Ωm0` |
+| `wCDM` | Constant dark-energy EoS `w` | `H0`, `Ωm0`, `w` |
+| `CPL`  | Chevallier–Polarski–Linder: `w(z) = w0 + wa·z/(1+z)` | `H0`, `Ωm0`, `w0`, `wa` |
 
-## Features
+**MG-based** (`Codes/MG-based/`) — `f(R)` modified-gravity models. `H(a)`/`yH(ln a)` is obtained by numerically solving the modified Friedmann ODE system (`scipy.integrate.solve_ivp`) rather than a closed-form `E(z)`, with a scalaron regularization scale `delta_s = 1e-7`:
 
-- **Modified Gravity Model**: R2-AB gravity implementation with hyperbolic tangent function
-- **Multi-Dataset Analysis**: Simultaneous fitting of SNe, CC, and RSD observational data
-- **MCMC Sampling**: Efficient parameter space exploration using `emcee` ensemble sampler
-- **Parallel Processing**: Utilizes multiprocessing for faster computation
-- **Visualization**: Corner plots for posterior distributions
+| Model | `f(R)` form | Extra parameter |
+|-------|-------------|------------------|
+| `Appleby-Battye` (AB) | tanh-based broken `f(R)` | `b` (also fit with a Jeffreys prior on `log b` as an alternative run) |
+| `Hu-Sawicki` (HS) | broken power law, `n = 1` | `mu_HS` (also saved reparametrized as `mu_HS/100` and `ln(mu_HS)` for prior/numerical-stability checks) |
+| `Starobinsky` (ST) | `n = 1` | `lbd` (Λ-scale parameter) |
+
+## Data (`Data/`)
+
+- `CC/CC_Hz_data.txt` — cosmic chronometer `H(z)` measurements with errors.
+- `SNe/Pantheon+SH0ES.dat` + `Pantheon+SH0ES_STAT+SYS.cov` — 1701 SNe Ia apparent magnitudes with full stat+sys covariance (a `z > 0.01` cut is applied before fitting).
+- `BAO/desi_gaussian_bao_ALL_GCcomb_mean.txt` + `..._cov.txt` — DESI DR2 Gaussianized BAO distance measurements and covariance.
+- `FRB/frb_catalog.txt` — FRB dispersion measures (`DM_obs`), Milky Way ISM + halo contributions, redshifts and host metadata, used to extract the extragalactic DM.
+
+## Code layout (`Codes/`)
+
+Each model directory (`LCDM`, `wCDM`, `CPL`, `Appleby-Battye`, `Hu-Sawicki`, `Starobinsky`) follows the same pattern:
+
+- `CC/`, `SNe/`, `BAO/`, `FRB/` — single-probe MCMC fits.
+- `CC_FRB/`, `BAO_FRB/`, `SNe_FRB/` — two-probe combinations with FRB.
+- `CC_SNe_BAO/` — the three "standard" probes combined.
+- `CC_SNe_BAO_FRB/` — full joint fit; also stores `log_prob_*.npy` alongside the chain.
+- `Corner/` (or `Corners/`) — overlaid corner plots comparing dataset combinations for that model, plus `stats_*_full.txt` with parameter constraints at 68% and 95% CL.
+- `FoM/` — Figure-of-Merit notebook: computes the inverse-area of the 2D highest-posterior-density contour (via Gaussian KDE) to quantify how much adding FRB data shrinks the `H0`–`Ωb` posterior.
+
+Each fit notebook saves its flattened chain as `flat_samples_*.npy` (and `log_prob_*.npy` for the full joint fits) plus a GetDist corner plot (`Corner_*.png`).
+
+`Codes/Model-comparison/Model_comparison.ipynb` builds a unified comparison table (`model_comparison.txt`) across all six models using the full `CC+SNe+BAO+FRB` fit: χ², AIC, BIC, ΔAIC/ΔBIC, an approximate Bayes factor (`lnBF ≈ -0.5·ΔBIC`), and a likelihood-ratio-test p-value, with verdicts against LCDM as the reference model.
 
 ## Requirements
 
-### Python Dependencies
-
 ```bash
-pip install numpy pandas scipy matplotlib emcee corner
+pip install numpy pandas scipy matplotlib emcee getdist
 ```
 
-### Required Libraries
-- `numpy` - Numerical computations
-- `pandas` - Data handling
-- `scipy` - Integration and optimization
-- `matplotlib` - Plotting and visualization
-- `emcee` - MCMC ensemble sampler
-- `corner` - Corner plot generation
-
-## Data Requirements
-
-The code expects the following data files:
-
-1. **Pantheon+SH0ES SNe Data**:
-   - Path: `/home/usuario/Downloads/DataRelease-main/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat`
-   - Covariance matrix: `/home/usuario/Downloads/DataRelease-main/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov`
-
-2. **Cosmic Chronometer Data**: Embedded in the code
-3. **RSD Data**: Embedded in the code
-
-**Note**: Update the file paths in lines 90-98 to match your data locations.
-
-## Model Parameters
-
-The code fits for 5 cosmological parameters:
-
-| Parameter | Description | Prior Range |
-|-----------|-------------|-------------|
-| `H0` | Hubble constant (km/s/Mpc) | 54 - 76 |
-| `Ω_m0` | Matter density parameter | 0.1 - 0.5 |
-| `σ8(0)` | Amplitude of matter fluctuations | 0.7 - 0.9 |
-| `Mb` | Absolute magnitude of SNe | -20.2 - -19.0 |
-| `b` | AB model parameter | 1.6 - 12.0 |
-
-## Physical Models
-
-### 1. Hubble Parameter H(t)
-Solves the modified Friedmann equation for the R2-AB model with initial conditions set at redshift z ≈ 4 (t = 0.2).
-
-### 2. Growth Function fs8(z)
-Computes the growth rate of cosmic structure formation including modifications from the R2-AB model.
-
-### 3. Luminosity Distance
-Calculates the luminosity distance to supernovae using numerical integration of the inverse Hubble parameter.
+MG-based notebooks additionally use `multiprocessing.Pool` for parallel walker evaluation and `scipy.interpolate.RegularGridInterpolator` to speed up repeated `H(z)` evaluations from precomputed grids (`H_array_*.npy`, `Hgrid_*.npz`).
 
 ## Usage
 
-### Basic Execution
+Each analysis is a self-contained Jupyter notebook. Open the relevant notebook (e.g. `Codes/GR-based/LCDM/CC_SNe_BAO/LCDM_CC_SNe_BAO.ipynb`) and run all cells — it loads the data from `Data/`, runs the `emcee` sampler, and writes the chain, log-probability, and corner plot into its own directory.
 
-```python
-python "MCMC_AB_model (cópia).py"
-```
+**Note**: data paths in the notebooks are currently absolute (e.g. `/home/brunowesley/projetos/MCMC-cosmo/Data/CC/CC_Hz_data.txt`); update them if running from a different location.
 
-### MCMC Configuration
+## Model comparison summary (CC + SNe + BAO + FRB)
 
-Key parameters in the code:
-```python
-nwalkers = 40        # Number of MCMC walkers
-niter = 10000        # Number of production iterations
-burnin = 1500        # Burn-in iterations to discard
-initial = [70, 0.3, 0.8, -19.253, 5]  # Initial parameter guess
-```
+| Model | k | Δ AIC vs LCDM | Δ BIC vs LCDM | LRT vs LCDM |
+|-------|---|----------------|----------------|-------------|
+| LCDM | 6 | reference | reference | reference |
+| wCDM | 7 | −8.63 (strong for wCDM) | −3.17 (positive for wCDM) | p = 0.0011 |
+| CPL  | 8 | −7.06 (strong for CPL) | +3.86 (positive for LCDM) | not significant |
+| AB   | 7 | +2.26 (positive for LCDM) | +7.72 (strong for LCDM) | — |
+| HS   | 7 | −8.17 (strong for HS) | −2.70 (positive for HS) | p = 0.0014 |
+| ST   | 7 | −8.19 (strong for ST) | −2.72 (positive for ST) | p = 0.0014 |
 
-### Workflow
-
-1. **Data Loading**: Reads observational datasets
-2. **Model Definition**: Sets up R2-AB gravity equations
-3. **Likelihood Computation**: Calculates chi-squared for each dataset
-4. **MCMC Sampling**: 
-   - Burn-in phase (1500 iterations)
-   - Production phase (10000 iterations)
-5. **Results Output**:
-   - `Results_SNe+CC+RSD_AB.txt` - MCMC chains
-   - `log_pro_SNe+CC+RSD_AB.txt` - Log probability values
-   - `MCMC_AB_fs8+CC_SNIa.pdf` - Corner plot visualization
-
-## Output Files
-
-After running the code, you'll get:
-
-- **Results_SNe+CC+RSD_AB.txt**: Complete MCMC chain samples (all walkers, all iterations)
-- **log_pro_SNe+CC+RSD_AB.txt**: Log probability values for each sample
-- **MCMC_AB_fs8+CC_SNIa.pdf**: Corner plot showing parameter distributions and correlations
-
-## Key Functions
-
-### Data Analysis Functions
-
-- `chiCC()` - Chi-squared for Cosmic Chronometer data
-- `chiRSD()` - Chi-squared for RSD data  
-- `chi2_SN()` - Chi-squared for SNe data
-- `chi_tot()` - Combined chi-squared statistic
-
-### Model Functions
-
-- `Hubble()` - ODE system for H(t) evolution
-- `solHCC()` - Solves for H(z) at specific redshifts
-- `contrast_AB()` - ODE system for density contrast
-- `fs8_AB()` - Computes growth rate fs8
-- `mag_MG()` - Calculates SNe apparent magnitude
-
-### MCMC Functions
-
-- `lnlike()` - Log-likelihood function
-- `lnprior()` - Log-prior probability
-- `lnprob()` - Log-posterior probability
-
-## Performance Optimization
-
-The code uses several optimizations:
-- **Parallel Processing**: Utilizes `multiprocessing.Pool` for parallel walker evolution
-- **Conditional Evaluations**: Checks for numerical stability (e.g., `abs(alpha) < 15`)
-- **Efficient Integration**: Uses `LSODA` solver with relative tolerance of 10^-6
-
-## Numerical Considerations
-
-- **Integration Method**: Uses `scipy.integrate.solve_ivp` with LSODA method for stiff ODEs
-- **Numerical Stability**: Implements conditional checks to avoid overflow in hyperbolic functions
-- **Initial Conditions**: Set at early times (z ≈ 4) assuming GR conditions
-
-## Customization
-
-### Modifying Priors
-
-Edit the `lnprior()` function (lines 400-404):
-```python
-if 54 < H0 < 76 and 0.1 < O_m0 < 0.5 and ...:
-```
-
-### Changing Dataset Weights
-
-Modify the `chi_tot()` function (lines 380-384) to add weights:
-```python
-return w_cc*chicc + w_rsd*chirsd + w_sn*chisn
-```
-
-### Adjusting MCMC Settings
-
-Modify variables around line 415:
-- Increase `nwalkers` for better exploration
-- Increase `niter` for better convergence
-- Adjust `burnin` based on chain diagnostics
-
-## Troubleshooting
-
-### Common Issues
-
-1. **File Not Found**: Update data file paths to your system
-2. **Slow Performance**: Reduce `niter` for testing or use more CPU cores
-3. **Poor Convergence**: Increase `burnin` or adjust initial parameters
-4. **Memory Issues**: Reduce `nwalkers` or `niter`
-
-### Convergence Diagnostics
-
-Check the output to ensure:
-- Acceptance fraction is between 0.2-0.5
-- Chains have reached steady state
-- Corner plots show smooth posterior distributions
-
-## References
-
-This implementation is based on modified gravity cosmology research. Key concepts:
-
-- **R2-AB Model**: A specific form of f(R) gravity with hyperbolic tangent transition
-- **Growth Rate**: fs8 quantifies structure formation
-- **Cosmic Chronometers**: Determines H(z) from differential ages of galaxies
-- **Pantheon+**: Latest Type Ia Supernovae compilation
-
-## Author Notes
-
-- Original Jupyter notebook: `MCMC_Fernanda_Completo.ipynb`
-- Google Colab origin: `https://colab.research.google.com/drive/1eAf9QibntI5McERMHSL3-NTmJFQ56VHX`
-
-## License
-
-Please cite appropriate papers if using this code for research purposes.
-
-## Additional Notes
-
-- The code assumes flat universe geometry (k=0.125 regularization parameter)
-- Speed of light: c = 1 (natural units used internally)
-- Radiation density: Ωr0 = 0 (negligible in late-time universe approximation)
-- Delta parameter: 10^-7 (controls transition scale)
-
----
-
-**Last Updated**: January 2026
+Full numbers are in `Codes/Model-comparison/model_comparison.txt`.

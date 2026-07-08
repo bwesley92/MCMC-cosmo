@@ -2,18 +2,17 @@
 ================================================================================
                 UNIFIED MODEL COMPARISON  (CC + SNe + BAO + FRB)                
                                 Reference: LCDM                                 
-       AB (Unif) = uniform prior on b  |  AB (Jeff) = Jeffreys prior on b       
 ================================================================================
 
   --- Statistics ---
                 LCDM        wCDM         CPL          AB          HS          ST
 Quantity                                                                        
 k                  6           7           8           7           7           7
-ln L_max  -1383.4191  -1378.4736  -1378.1263  -1383.5411  -1378.6458  -1378.4837
-chi2       2766.8382   2756.9472   2756.2526   2767.0822   2757.2916   2756.9674
-chi2/dof      1.5956      1.5909      1.5914      1.5967      1.5911      1.5909
-AIC        2778.8383   2770.9472   2772.2526   2781.0822   2771.2916   2770.9675
-BIC        2811.6081   2809.1786   2815.9458   2819.3136   2809.5231   2809.1990
+ln L_max  -1383.3235  -1378.0069  -1377.7934  -1383.4515  -1378.2402  -1378.2307
+chi2       2766.6470   2756.0138   2755.5868   2766.9030   2756.4804   2756.4614
+chi2/dof      1.5955      1.5903      1.5910      1.5966      1.5906      1.5906
+AIC        2778.6470   2770.0137   2771.5868   2780.9029   2770.4804   2770.4615
+BIC        2811.4168   2808.2452   2815.2799   2819.1344   2808.7119   2808.6930
 
 --------------------------------------------------------------------------------
 
@@ -21,18 +20,18 @@ BIC        2811.6081   2809.1786   2815.9458   2819.3136   2809.5231   2809.1990
            LCDM     wCDM      CPL       AB       HS       ST
 Quantity                                                    
 delta_k       —        1        2        1        1        1
-Delta ln L    —  +4.9455  +5.2928  -0.1220  +4.7733  +4.9354
-Delta AIC     —  -7.8911  -6.5857  +2.2439  -7.5467  -7.8708
-Delta BIC     —  -2.4295  +4.3377  +7.7055  -2.0850  -2.4091
-ln BF         —  +1.2147  -2.1689  -3.8528  +1.0425  +1.2045
+Delta ln L    —  +5.3166  +5.5301  -0.1280  +5.0833  +5.0928
+Delta AIC     —  -8.6333  -7.0602  +2.2559  -8.1666  -8.1855
+Delta BIC     —  -3.1716  +3.8631  +7.7176  -2.7049  -2.7238
+ln BF         —  +1.5858  -1.9316  -3.8588  +1.3525  +1.3619
 
 --------------------------------------------------------------------------------
 
   --- Verdicts ---
-                  LCDM                          wCDM                           CPL                           AB                            HS                            ST
-Quantity                                                                                                                                                                   
-AIC verdict  Reference  Considerable for alternative  Considerable for alternative       Positive for reference  Considerable for alternative  Considerable for alternative
-BIC verdict  Reference      Positive for alternative  Positive against alternative   Strong against alternative      Positive for alternative      Positive for alternative
-LRT verdict  Reference       p = 0.0017  significant       p = 0.0050  significant  p = 1.0000  not significant       p = 0.0020  significant       p = 0.0017  significant
+                  LCDM                      wCDM                      CPL                           AB                        HS                        ST
+Quantity                                                                                                                                                  
+AIC verdict  Reference    Strong for alternative   Strong for alternative       Positive for reference    Strong for alternative    Strong for alternative
+BIC verdict  Reference  Positive for alternative   Positive for reference         Strong for reference  Positive for alternative  Positive for alternative
+LRT verdict  Reference   p = 0.0011  significant  p = 0.0040  significant  p = 1.0000  not significant   p = 0.0014  significant   p = 0.0014  significant
 
 ================================================================================
