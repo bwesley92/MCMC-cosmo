@@ -40,7 +40,7 @@ Each model directory (`LCDM`, `wCDM`, `CPL`, `Appleby-Battye`, `Hu-Sawicki`, `St
 
 Each fit notebook saves its flattened chain as `flat_samples_*.npy` (and `log_prob_*.npy` for the full joint fits) plus a GetDist corner plot (`Corner_*.png`).
 
-`Codes/Model-comparison/Model_comparison.ipynb` builds a unified comparison table (`model_comparison.txt`) across all six models using the full `CC+SNe+BAO+FRB` fit: χ², AIC, BIC, ΔAIC/ΔBIC, an approximate Bayes factor (`lnBF ≈ -0.5·ΔBIC`), and a likelihood-ratio-test p-value, with verdicts against LCDM as the reference model.
+`Codes/Model-comparison/AIC-BIC-LRT/Model_comparison.ipynb` builds a unified comparison table (`model_comparison.txt`) across all six models using the full `CC+SNe+BAO+FRB` fit: χ², AIC, BIC, ΔAIC/ΔBIC, an approximate Bayes factor (`lnBF ≈ -0.5·ΔBIC`), and a likelihood-ratio-test p-value, with verdicts against LCDM as the reference model. `Codes/Model-comparison/Bayesian-Evidence/` computes the direct k-NN Bayesian evidence (via the vendored `MCEvidence` package) and the resulting Bayes factors for cross-check.
 
 ## Requirements
 
@@ -67,4 +67,4 @@ Each analysis is a self-contained Jupyter notebook. Open the relevant notebook (
 | HS   | 7 | −8.17 (strong for HS) | −2.70 (positive for HS) | p = 0.0014 |
 | ST   | 7 | −8.19 (strong for ST) | −2.72 (positive for ST) | p = 0.0014 |
 
-Full numbers are in `Codes/Model-comparison/model_comparison.txt`.
+Full numbers are in `Codes/Model-comparison/AIC-BIC-LRT/model_comparison.txt`.
