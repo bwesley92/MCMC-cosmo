@@ -15,8 +15,7 @@ additional likelihood evaluations — which makes it applicable as a
 post-processing step on the chains already produced under
 `Codes/GR-based-models/` and `Codes/MG-based-models/`.
 
-For each model, for both the Baseline (CC+SNe+BAO) and Baseline+FRB
-(CC+SNe+BAO+FRB) chains:
+For each model, for both the Baseline (CC+SNe+BAO) and Baseline+FRB chains:
 
 1. **Load** the flattened chain (`flat_samples_*.npy`) and its
    log-probability (`log_prob_*.npy`).
@@ -38,12 +37,11 @@ For each model, for both the Baseline (CC+SNe+BAO) and Baseline+FRB
    independent), interpreted on the **Jeffreys scale** (`|ln BF| < 1`: not
    worth a mention; `< 2.5`: substantial; `< 5`: strong; `≥ 5`: decisive).
 
-This is the analysis added in response to the referee's request (major
-comment M6) to supplement AIC/BIC/LRT with a direct evidence-based
-comparison, and to explain why it can disagree with the BIC approximation
-(the latter assumes a large-sample Gaussian posterior, which is less
-reliable for parameters only weakly constrained by the data, e.g.
-`(w0, wa)` in CPL or `b` in AB).
+This supplements the AIC/BIC/LRT comparison with a direct, genuine
+evidence-based comparison, and explains why the two can disagree: the
+BIC approximation assumes a large-sample Gaussian posterior, which is
+less reliable for parameters only weakly constrained by the data, e.g.
+`(w0, wa)` in CPL or `b` in AB.
 
 ## Files
 
@@ -78,6 +76,6 @@ reliable for parameters only weakly constrained by the data, e.g.
    the kNN evidence-estimator method used here.
 2. `MCEvidence` package: [github.com/yabebalFantaye/MCEvidence](https://github.com/yabebalFantaye/MCEvidence)
    — the reference implementation vendored in [`MCEvidence/`](./MCEvidence).
-3. Manuscript, Sec. "Model Comparison" (Table 10) and the response letter
-   (major comment M6) — the reported constraints and the discussion of the
-   disagreement with the BIC-based approximation.
+3. Manuscript, Sec. "Model Comparison" (Table 10) — the reported
+   constraints and the discussion of the disagreement with the
+   BIC-based approximation.
