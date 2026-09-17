@@ -1,7 +1,6 @@
 # Bayesian Evidence
 
-Direct numerical estimate of the Bayesian evidence `ln Z` (in the
-manuscript's notation; the code stores it as `lnE`) and the resulting
+Direct numerical estimate of the Bayesian evidence `lnE` and the resulting
 Bayes factors `ln BF` (relative to ΛCDM) for all six models, as a genuine
 alternative to the BIC-based asymptotic approximation
 `ln BF ≈ -ΔBIC/2` used in `../AIC-BIC-LRT/`.
@@ -11,7 +10,7 @@ alternative to the BIC-based asymptotic approximation
 We use the **k-th-nearest-neighbour (kNN) evidence estimator** of
 Heavens et al. (2017), implemented by the vendored [`MCEvidence/`](./MCEvidence)
 package. Unlike nested sampling or thermodynamic integration, this estimator
-computes `ln Z` directly from an existing MCMC chain — no re-fitting, no
+computes `lnE` directly from an existing MCMC chain — no re-fitting, no
 additional likelihood evaluations — which makes it applicable as a
 post-processing step on the chains already produced under
 `Codes/GR-based-models/` and `Codes/MG-based-models/`.
@@ -31,10 +30,9 @@ For each model, for both the Baseline (CC+SNe+BAO) and Baseline+FRB chains:
    quasi-independent posterior samples.
 4. **Evidence estimate**: the thinned `(weight, -log_prob, samples)` chain is
    passed to `MCEvidence(..., kmax=k+1)` with `k = 1` (first nearest
-   neighbour). The returned `ln Z` (the code's `lnE` variable) carries an
-   analytic uncertainty `sigma_lnE = 1 / sqrt(N*k + 1)`, with `N` the number
-   of thinned samples.
-5. **Bayes factor**: `ln BF(model) = ln Z(model) - ln Z(ΛCDM)`, with
+   neighbour). The returned `lnE` carries an analytic uncertainty
+   `sigma_lnE = 1 / sqrt(N*k + 1)`, with `N` the number of thinned samples.
+5. **Bayes factor**: `ln BF(model) = lnE(model) - lnE(ΛCDM)`, with
    uncertainties combined in quadrature (the two evidence estimates are
    independent), interpreted on the **Jeffreys scale** (`|ln BF| < 1`: not
    worth a mention; `< 2.5`: substantial; `< 5`: strong; `≥ 5`: decisive).
