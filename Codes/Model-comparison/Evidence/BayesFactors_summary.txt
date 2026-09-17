@@ -1,0 +1,35 @@
+==============================================================================
+      BAYESIAN EVIDENCE AND BAYES FACTORS (k=1 NN, Heavens et al. 2017)       
+                               Reference: LCDM                                
+==============================================================================
+
+--- Log-evidence ln E ---
+LCDM    Baseline: -747.483 +/- 0.0044   Baseline+FRB: -1401.920 +/- 0.0043
+wCDM    Baseline: -746.777 +/- 0.0051   Baseline+FRB: -1400.303 +/- 0.0050
+CPL     Baseline: -747.632 +/- 0.0095   Baseline+FRB: -1401.825 +/- 0.0041
+AB      Baseline: -747.765 +/- 0.0110   Baseline+FRB: -1402.305 +/- 0.0062
+HS      Baseline: -745.133 +/- 0.0044   Baseline+FRB: -1398.717 +/- 0.0039
+ST      Baseline: -744.210 +/- 0.0118   Baseline+FRB: -1397.899 +/- 0.0106
+
+--- ln BF vs LCDM (Baseline) ---
+  wCDM  : ln BF = +0.706 +/- 0.0068   [not worth more than a bare mention]
+  CPL   : ln BF = -0.150 +/- 0.0105   [not worth more than a bare mention]
+  AB    : ln BF = -0.282 +/- 0.0118   [not worth more than a bare mention]
+  HS    : ln BF = +2.350 +/- 0.0062   [substantial (for alternative)]
+  ST    : ln BF = +3.272 +/- 0.0126   [strong (for alternative)]
+
+--- ln BF vs LCDM (Baseline + FRB) ---
+  wCDM  : ln BF = +1.617 +/- 0.0066   [substantial (for alternative)]
+  CPL   : ln BF = +0.095 +/- 0.0059   [not worth more than a bare mention]
+  AB    : ln BF = -0.385 +/- 0.0076   [not worth more than a bare mention]
+  HS    : ln BF = +3.203 +/- 0.0058   [strong (for alternative)]
+  ST    : ln BF = +4.021 +/- 0.0115   [strong (for alternative)]
+
+--- Comparison with BIC-based ln BF approximation (Baseline + FRB) ---
+  wCDM  : k-NN=+1.617   BIC-approx=+1.5858   Delta=+0.031
+  CPL   : k-NN=+0.095   BIC-approx=-1.9316   Delta=+2.026
+  AB    : k-NN=-0.385   BIC-approx=-3.8588   Delta=+3.474
+  HS    : k-NN=+3.203   BIC-approx=+1.3525   Delta=+1.851
+  ST    : k-NN=+4.021   BIC-approx=+1.3619   Delta=+2.659
+
+==============================================================================

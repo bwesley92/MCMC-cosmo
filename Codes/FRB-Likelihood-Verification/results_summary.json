@@ -1,0 +1,98 @@
+{
+  "n_frb": 104,
+  "z_range": [
+    0.0085,
+    1.354
+  ],
+  "bestfit_point": {
+    "H0": 70.46,
+    "Om0": 0.305,
+    "Ob": 0.0501,
+    "sigma_host": 0.833,
+    "exp_mu": 104.2
+  },
+  "test1_Pcos_normalization": {
+    "n_redshifts_tested": 20,
+    "max_abs_deviation_from_unity": 5.551115123125783e-16
+  },
+  "test2_PDMext_normalization": {
+    "n_redshifts_tested": 6,
+    "max_abs_deviation_from_unity": 0.0003048319437158886
+  },
+  "test3_production_vs_quadrature": {
+    "npts_300": {
+      "max_relative_diff": 0.06754139991833553,
+      "median_relative_diff": 0.0001278654572344042
+    },
+    "npts_20000": {
+      "max_relative_diff": 0.0010467293325389178,
+      "median_relative_diff": 1.1580283274633818e-06
+    },
+    "lnL_FRB_production_npts300": -649.7281015296493,
+    "lnL_FRB_independent_quadrature": -649.6999174836302,
+    "lnL_FRB_difference": -0.02818404601907787,
+    "n_frb_reldiff_above_1pct_npts300": 4,
+    "worst_frbs_npts300": [
+      {
+        "name": "FRB 20231230A",
+        "z": 0.0298,
+        "DM_ext_obs": 49.1695,
+        "rel_diff_npts300": 0.06754139991833553
+      },
+      {
+        "name": "FRB 20181223C",
+        "z": 0.03024,
+        "DM_ext_obs": 41.709999999999994,
+        "rel_diff_npts300": 0.0311850199074954
+      },
+      {
+        "name": "FRB 20200723B",
+        "z": 0.0085,
+        "DM_ext_obs": 161.0,
+        "rel_diff_npts300": 0.021490278291401314
+      },
+      {
+        "name": "FRB 20231011A",
+        "z": 0.0783,
+        "DM_ext_obs": 77.7476,
+        "rel_diff_npts300": 0.012989774767666681
+      },
+      {
+        "name": "FRB 20240209A",
+        "z": 0.1384,
+        "DM_ext_obs": 63.418000000000006,
+        "rel_diff_npts300": 0.00923680413053939
+      },
+      {
+        "name": "FRB 20220207C",
+        "z": 0.04304,
+        "DM_ext_obs": 136.28,
+        "rel_diff_npts300": 0.008324577837197672
+      },
+      {
+        "name": "FRB 20211212A",
+        "z": 0.0715,
+        "DM_ext_obs": 128.9,
+        "rel_diff_npts300": 0.007771434540789967
+      },
+      {
+        "name": "FRB 20190303A",
+        "z": 0.064,
+        "DM_ext_obs": 143.39999999999998,
+        "rel_diff_npts300": 0.0054054961990985155
+      },
+      {
+        "name": "FRB 20231229A",
+        "z": 0.019,
+        "DM_ext_obs": 83.3665,
+        "rel_diff_npts300": 0.004294988972613212
+      },
+      {
+        "name": "FRB 20210807D",
+        "z": 0.1293,
+        "DM_ext_obs": 80.10000000000002,
+        "rel_diff_npts300": 0.004282892786435921
+      }
+    ]
+  }
+}

@@ -1,4 +1,21 @@
+# --- Only Codes/ and Data/ are meant for GitHub: code + input data so ---
+# --- that a third party can rerun the pipeline and reproduce results. ---
+
+# Not pushed to GitHub (manuscript text, referee material, reference PDFs)
+/Paper/
+/Referee-criticism/
+/References/
+
+# Regeneratable MCMC/analysis outputs (chains, grids, plots) — not needed
+# to run the code, only produced by running it
 *flat_samples*
-*Corner*
+*log_prob*
 *.npy
+*.npz
+*Corner*
 *.png
+
+# Python hygiene
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
