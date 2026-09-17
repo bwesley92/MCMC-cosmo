@@ -1,11 +1,11 @@
 """
-Step 1 of the M2 verification: confirm that the FRB likelihood function
+Step 1 of this verification: confirm that the FRB likelihood function
 `P_DM_ext_vectorized` (and its use inside `lnlike_cc_sne_bao_frb`) is
 implemented with the same functional form across all six main-analysis
 notebooks (Baseline+FRB fiducial runs used for Tables 2-7 and Table 10
 of the manuscript).
 
-This substantiates the response-letter (M2) claim that the corrected,
+This substantiates the response-letter claim that the corrected,
 physical-units form of the truncated-Gaussian/log-normal convolution
 "was verified directly against the FRB-likelihood implementation in
 each model's MCMC notebook ... identically across all six models."

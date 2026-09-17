@@ -1,5 +1,5 @@
 """
-Numerical verification of the FRB likelihood normalization (referee comment M2).
+Numerical verification of the FRB likelihood normalization.
 
 Context
 -------
@@ -10,7 +10,7 @@ Eq. 6.7 in main_arxiv.tex): P_cos is evaluated directly in physical DM
 units and the convolution with the host-galaxy log-normal PDF integrates
 to unity without any additional normalization factor.
 
-The response letter (response_to_referee.tex, item M2) claims that this
+The response letter (response_to_referee.tex) claims that this
 bug was confined to the manuscript equation, and that the production
 likelihood code already used the correct (physical-units) form in all
 six models. This script verifies that claim numerically, in three steps:

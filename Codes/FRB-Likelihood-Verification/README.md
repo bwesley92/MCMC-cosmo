@@ -1,4 +1,4 @@
-# FRB Likelihood Verification (Referee Comment M2)
+# FRB Likelihood Verification
 
 ## Context
 
@@ -9,7 +9,7 @@ rescaled argument of `P_cos`. This was corrected in the manuscript (current
 DM units, and the convolution with the host-galaxy log-normal PDF integrates
 to unity without any additional normalization factor.
 
-The response letter (`response_to_referee.tex`, item **M2**) states:
+The response letter (`response_to_referee.tex`) states:
 
 > "We confirm that this inconsistency was confined to the manuscript
 > equation: the likelihood code already evaluated the truncated Gaussian
