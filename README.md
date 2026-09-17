@@ -4,7 +4,7 @@ Bayesian parameter estimation for cosmological models, using MCMC (`emcee`) to c
 
 ## Models
 
-**GR-based** (`Codes/GR-based/`) — standard dark-energy parametrizations on top of GR:
+**GR-based** (`Codes/GR-based-models/`) — standard dark-energy parametrizations on top of GR:
 
 | Model | Expansion history | Free parameters |
 |-------|--------------------|------------------|
@@ -12,7 +12,7 @@ Bayesian parameter estimation for cosmological models, using MCMC (`emcee`) to c
 | `wCDM` | Constant dark-energy EoS `w` | `H0`, `Ωm0`, `w` |
 | `CPL`  | Chevallier–Polarski–Linder: `w(z) = w0 + wa·z/(1+z)` | `H0`, `Ωm0`, `w0`, `wa` |
 
-**MG-based** (`Codes/MG-based/`) — `f(R)` modified-gravity models. `H(a)`/`yH(ln a)` is obtained by numerically solving the modified Friedmann ODE system (`scipy.integrate.solve_ivp`) rather than a closed-form `E(z)`, with a scalaron regularization scale `delta_s = 1e-7`:
+**MG-based** (`Codes/MG-based-models/`) — `f(R)` modified-gravity models. `H(a)`/`yH(ln a)` is obtained by numerically solving the modified Friedmann ODE system (`scipy.integrate.solve_ivp`) rather than a closed-form `E(z)`, with a scalaron regularization scale `delta_s = 1e-7`:
 
 | Model | `f(R)` form | Extra parameter |
 |-------|-------------|------------------|
@@ -52,7 +52,7 @@ MG-based notebooks additionally use `multiprocessing.Pool` for parallel walker e
 
 ## Usage
 
-Each analysis is a self-contained Jupyter notebook. Open the relevant notebook (e.g. `Codes/GR-based/LCDM/CC_SNe_BAO/LCDM_CC_SNe_BAO.ipynb`) and run all cells — it loads the data from `Data/`, runs the `emcee` sampler, and writes the chain, log-probability, and corner plot into its own directory.
+Each analysis is a self-contained Jupyter notebook. Open the relevant notebook (e.g. `Codes/GR-based-models/LCDM/CC_SNe_BAO/LCDM_CC_SNe_BAO.ipynb`) and run all cells — it loads the data from `Data/`, runs the `emcee` sampler, and writes the chain, log-probability, and corner plot into its own directory.
 
 **Note**: data paths in the notebooks are currently absolute (e.g. `/home/brunowesley/projetos/MCMC-cosmo/Data/CC/CC_Hz_data.txt`); update them if running from a different location.
 
