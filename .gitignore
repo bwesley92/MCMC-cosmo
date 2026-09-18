@@ -2,9 +2,7 @@
 # --- that a third party can rerun the pipeline and reproduce results. ---
 
 # Not pushed to GitHub (manuscript text, referee material, reference PDFs)
-/Paper/
-/Referee-criticism/
-/References/
+/Manuscript/
 
 # Regeneratable MCMC/analysis outputs (chains, grids, plots) — not needed
 # to run the code, only produced by running it
@@ -14,6 +12,10 @@
 *.npz
 Corner_*
 *.png
+
+# FRB-likelihood-verification: generated outputs, regenerated on every run
+Codes/FRB-likelihood-verification/results_summary.json
+Codes/FRB-likelihood-verification/extracted_P_DM_ext_functions.txt
 
 # Python hygiene
 __pycache__/
