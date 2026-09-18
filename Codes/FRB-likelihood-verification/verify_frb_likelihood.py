@@ -47,7 +47,7 @@ REPO = "/home/brunowesley/projetos/MCMC-cosmo"
 
 # ------------------------------------------------------------------
 # 1. Load the real FRB catalog (same loading logic as the production
-#    notebooks: Codes/GR-based-models/LCDM/CC_SNe_BAO_FRB/LCDM_CC_SNe_BAO_FRB.ipynb)
+#    notebooks: Codes/MCMC-Models/GR-based/LCDM/CC_SNe_BAO_FRB/LCDM_CC_SNe_BAO_FRB.ipynb)
 # ------------------------------------------------------------------
 df_frb = pd.read_csv(f"{REPO}/Data/FRB/frb_catalog.txt", sep="\t")
 df_frb = df_frb.sort_values(by="Redshift", ascending=True).reset_index(drop=True)
@@ -70,7 +70,7 @@ mp_si = 1.67262192369e-27
 km_to_pc = 1.0 / 3.0857e13
 m2_to_cm2 = 1e4
 Mpc_to_cm = 3.0857e24
-f_IGM = 0.83
+f_d = 0.83
 chi_e = 0.875
 
 c_kms = 299792.458
@@ -85,57 +85,57 @@ def H_LCDM(z, H0, Om0):
     return H0 * E_LCDM(z, Om0)
 
 
-def DM_IGM_LCDM(z, H0, Om0, Ob):
-    prefactor = 3.0 * c_si * f_IGM * chi_e / (8.0 * np.pi * G_si * mp_si)
+def DM_cos_LCDM(z, H0, Om0, Ob):
+    prefactor = 3.0 * c_si * f_d * chi_e / (8.0 * np.pi * G_si * mp_si)
     H_grid = H_LCDM(z_grid, H0, Om0)
     integrand = (1 + z_grid) / H_grid
     I_grid = cumulative_trapezoid(integrand, z_grid, initial=0.0)
     I_z = np.interp(z, z_grid, I_grid)
-    DM_IGM_z = prefactor * Ob * H0 ** 2 * I_z
-    return DM_IGM_z * (km_to_pc / (m2_to_cm2 * Mpc_to_cm))
+    DM_cos_z = prefactor * Ob * H0 ** 2 * I_z
+    return DM_cos_z * (km_to_pc / (m2_to_cm2 * Mpc_to_cm))
 
 
 # Table 2 (LCDM, Baseline+FRB) marginalized medians:
 H0_bf, Om0_bf, Ob_bf = 70.46, 0.305, 0.0501
 sigma_host_bf, exp_mu_bf = 0.833, 104.2
 
-DM_IGM_mean = DM_IGM_LCDM(z_frb, H0_bf, Om0_bf, Ob_bf)
-sigma_IGM = 173.8 * (z_frb ** 0.4)
+DM_cos_mean = DM_cos_LCDM(z_frb, H0_bf, Om0_bf, Ob_bf)
+sigma_cos = 173.8 * (z_frb ** 0.4)
 
 print(f"\nBest-fit point used: H0={H0_bf}, Om0={Om0_bf}, Ob={Ob_bf}, "
       f"sigma_host={sigma_host_bf}, exp_mu={exp_mu_bf}")
-print(f"DM_IGM_mean range: [{DM_IGM_mean.min():.2f}, {DM_IGM_mean.max():.2f}] pc/cm^3")
-print(f"sigma_IGM range:   [{sigma_IGM.min():.2f}, {sigma_IGM.max():.2f}] pc/cm^3")
+print(f"DM_cos_mean range: [{DM_cos_mean.min():.2f}, {DM_cos_mean.max():.2f}] pc/cm^3")
+print(f"sigma_cos range:   [{sigma_cos.min():.2f}, {sigma_cos.max():.2f}] pc/cm^3")
 
 
 # ------------------------------------------------------------------
 # 3. Production likelihood function, extracted verbatim from
-#    Codes/GR-based-models/LCDM/CC_SNe_BAO_FRB/LCDM_CC_SNe_BAO_FRB.ipynb
+#    Codes/MCMC-Models/GR-based/LCDM/CC_SNe_BAO_FRB/LCDM_CC_SNe_BAO_FRB.ipynb
 #    (identical in all six main-analysis notebooks, see
 #    extract_and_diff_functions.py)
 # ------------------------------------------------------------------
-def P_DM_ext_vectorized(z_frb, DM_ext_obs, DM_IGM_mean, sigma_IGM,
+def P_DM_ext_vectorized(z_frb, DM_ext_obs, DM_cos_mean, sigma_cos,
                          sigma_host, exp_mu, npts=300):
     mu_host = np.log(exp_mu)
     upper = max(DM_ext_obs.max(), 5.0 * exp_mu)
     DM_hosp_grid = np.linspace(1e-2, upper, npts)
     DM_hosp_grid = DM_hosp_grid[None, :]
     DM_ext_array = DM_ext_obs[:, None]
-    DM_IGM_array = DM_ext_array - DM_hosp_grid / (1 + z_frb[:, None])
-    sigma_IGM_array = sigma_IGM[:, None]
-    DM_IGM_mean_array = DM_IGM_mean[:, None]
+    DM_cos_array = DM_ext_array - DM_hosp_grid / (1 + z_frb[:, None])
+    sigma_cos_array = sigma_cos[:, None]
+    DM_cos_mean_array = DM_cos_mean[:, None]
 
-    y = (DM_IGM_array - DM_IGM_mean_array) / sigma_IGM_array
+    y = (DM_cos_array - DM_cos_mean_array) / sigma_cos_array
     phi = (1 / np.sqrt(2 * np.pi)) * np.exp(-0.5 * y ** 2)
-    norm_factor = 0.5 * (1 + erf(DM_IGM_mean_array / (sigma_IGM_array * np.sqrt(2))))
-    P_IGM = (1 / sigma_IGM_array) * phi / norm_factor
-    P_IGM[DM_IGM_array < 0] = 0.0
+    norm_factor = 0.5 * (1 + erf(DM_cos_mean_array / (sigma_cos_array * np.sqrt(2))))
+    P_cos = (1 / sigma_cos_array) * phi / norm_factor
+    P_cos[DM_cos_array < 0] = 0.0
 
     DM_hosp_array = DM_hosp_grid
     P_host = (1.0 / (np.sqrt(2 * np.pi) * sigma_host * DM_hosp_array)) \
         * np.exp(-0.5 * ((np.log(DM_hosp_array) - mu_host) / sigma_host) ** 2)
 
-    integrand = P_IGM * P_host
+    integrand = P_cos * P_host
     P_total = trapezoid(integrand, x=DM_hosp_grid[0], axis=1)
     return np.maximum(P_total, 1e-100)
 
@@ -182,7 +182,7 @@ print("\n" + "=" * 70)
 print("TEST 1: normalization of P_cos over DM_cos >= 0 (Eq. 3.7)")
 print("=" * 70)
 z_test_grid = np.linspace(z_frb.min(), z_frb.max(), 20)
-mean_test = DM_IGM_LCDM(z_test_grid, H0_bf, Om0_bf, Ob_bf)
+mean_test = DM_cos_LCDM(z_test_grid, H0_bf, Om0_bf, Ob_bf)
 sigma_test = 173.8 * (z_test_grid ** 0.4)
 
 max_dev_pcos = 0.0
@@ -200,7 +200,7 @@ print("\n" + "=" * 70)
 print("TEST 2: normalization of P(DM_ext|z) over DM_ext >= 0 (Eq. 6.7)")
 print("=" * 70)
 z_test_sub = np.linspace(z_frb.min(), z_frb.max(), 6)  # coarser: this test is expensive (nested quad)
-mean_sub = DM_IGM_LCDM(z_test_sub, H0_bf, Om0_bf, Ob_bf)
+mean_sub = DM_cos_LCDM(z_test_sub, H0_bf, Om0_bf, Ob_bf)
 sigma_sub = 173.8 * (z_test_sub ** 0.4)
 
 max_dev_pext = 0.0
@@ -225,15 +225,15 @@ print("        (104 real FRBs, LCDM Baseline+FRB best-fit)")
 print("=" * 70)
 
 P_production = P_DM_ext_vectorized(
-    z_frb, DM_ext_obs, DM_IGM_mean, sigma_IGM, sigma_host_bf, exp_mu_bf, npts=300
+    z_frb, DM_ext_obs, DM_cos_mean, sigma_cos, sigma_host_bf, exp_mu_bf, npts=300
 )
 P_production_hires = P_DM_ext_vectorized(
-    z_frb, DM_ext_obs, DM_IGM_mean, sigma_IGM, sigma_host_bf, exp_mu_bf, npts=20000
+    z_frb, DM_ext_obs, DM_cos_mean, sigma_cos, sigma_host_bf, exp_mu_bf, npts=20000
 )
 
 P_independent = np.array([
     P_DM_ext_scalar(dm, z, m, s, sigma_host_bf, exp_mu_bf)
-    for dm, z, m, s in zip(DM_ext_obs, z_frb, DM_IGM_mean, sigma_IGM)
+    for dm, z, m, s in zip(DM_ext_obs, z_frb, DM_cos_mean, sigma_cos)
 ])
 
 rel_diff_default = np.abs(P_production - P_independent) / P_independent

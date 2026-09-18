@@ -25,12 +25,12 @@ import os
 REPO = "/home/brunowesley/projetos/MCMC-cosmo"
 
 FILES = {
-    "LCDM": "Codes/GR-based-models/LCDM/CC_SNe_BAO_FRB/LCDM_CC_SNe_BAO_FRB.ipynb",
-    "wCDM": "Codes/GR-based-models/wCDM/CC_SNe_BAO_FRB/wCDM_CC_SNe_BAO_FRB.ipynb",
-    "CPL": "Codes/GR-based-models/CPL/CC_SNe_BAO_FRB/CPL_CC_SNe_BAO_FRB.ipynb",
-    "AB": "Codes/MG-based-models/Appleby-Battye/CC_SNe_BAO_FRB/AB_CC_SNe_BAO_FRB.ipynb",
-    "HS": "Codes/MG-based-models/Hu-Sawicki/CC_SNe_BAO_FRB/HS_CC_SNe_BAO_FRB.ipynb",
-    "ST": "Codes/MG-based-models/Starobinsky/CC_SNe_BAO_FRB/ST_CC_SNe_BAO_FRB.ipynb",
+    "LCDM": "Codes/MCMC-Models/GR-based/LCDM/CC_SNe_BAO_FRB/LCDM_CC_SNe_BAO_FRB.ipynb",
+    "wCDM": "Codes/MCMC-Models/GR-based/wCDM/CC_SNe_BAO_FRB/wCDM_CC_SNe_BAO_FRB.ipynb",
+    "CPL": "Codes/MCMC-Models/GR-based/CPL/CC_SNe_BAO_FRB/CPL_CC_SNe_BAO_FRB.ipynb",
+    "AB": "Codes/MCMC-Models/MG-based/Appleby-Battye/CC_SNe_BAO_FRB/AB_CC_SNe_BAO_FRB.ipynb",
+    "HS": "Codes/MCMC-Models/MG-based/Hu-Sawicki/CC_SNe_BAO_FRB/HS_CC_SNe_BAO_FRB.ipynb",
+    "ST": "Codes/MCMC-Models/MG-based/Starobinsky/CC_SNe_BAO_FRB/ST_CC_SNe_BAO_FRB.ipynb",
 }
 
 
