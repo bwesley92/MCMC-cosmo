@@ -71,7 +71,13 @@ Official public data release:
   constraints*, Phys. Rev. D 112, 8,
   [DOI:10.1103/tr6y-kpc6](https://doi.org/10.1103/tr6y-kpc6)
 
-Official public data release: [data.desi.lbl.gov](https://data.desi.lbl.gov)
+These exact files are the DESI DR2 all-tracer Gaussian BAO data vector and
+covariance, mirrored (unmodified) from
+[CobayaSampler/bao_data](https://github.com/CobayaSampler/bao_data/tree/master/desi_bao_dr2)
+(`desi_bao_dr2/desi_gaussian_bao_ALL_GCcomb_{mean,cov}.txt`), a git
+repository of likelihood inputs maintained for use with the Cobaya
+sampling framework. The official DESI collaboration data portal is
+[data.desi.lbl.gov](https://data.desi.lbl.gov).
 
 ## Fast Radio Bursts — `FRB/frb_catalog.txt`
 
