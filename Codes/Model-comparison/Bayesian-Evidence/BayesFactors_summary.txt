@@ -3,7 +3,7 @@
                                Reference: LCDM                                
 ==============================================================================
 
---- Log-evidence ln E ---
+--- Log-evidence ln Z ---
 LCDM    Baseline: -747.483 +/- 0.0044   Baseline+FRB: -1401.920 +/- 0.0043
 wCDM    Baseline: -746.777 +/- 0.0051   Baseline+FRB: -1400.303 +/- 0.0050
 CPL     Baseline: -747.632 +/- 0.0095   Baseline+FRB: -1401.825 +/- 0.0041
