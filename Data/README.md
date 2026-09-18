@@ -14,17 +14,23 @@ individual differential-age study that reported it:
 - Simon, Verde & Jimenez (2005), *Constraints on the redshift dependence of
   the dark energy potential*, [arXiv:astro-ph/0412269](https://arxiv.org/abs/astro-ph/0412269)
 - Stern, Jimenez, Verde, Kamionkowski & Stanford (2010), *Cosmic
-  chronometers: constraining the equation of state of dark energy*, JCAP
-  02, 008, [DOI:10.1088/1475-7516/2010/02/008](https://doi.org/10.1088/1475-7516/2010/02/008)
+  chronometers: constraining the equation of state of dark energy. I: H(z)
+  measurements*, JCAP 02, 008,
+  [DOI:10.1088/1475-7516/2010/02/008](https://doi.org/10.1088/1475-7516/2010/02/008)
 - Moresco et al. (2012), *Improved constraints on the expansion rate of the
-  Universe up to z~1.1*, JCAP 08, 006, [DOI:10.1088/1475-7516/2012/08/006](https://doi.org/10.1088/1475-7516/2012/08/006)
+  Universe up to z~1.1 from the spectroscopic evolution of cosmic
+  chronometers*, JCAP 08, 006,
+  [DOI:10.1088/1475-7516/2012/08/006](https://doi.org/10.1088/1475-7516/2012/08/006)
 - Zhang, Zhang, Yuan, Liu, Zhang & Sun (2014), *Four new observational H(z)
-  data from luminous red galaxies in SDSS DR7*, RAA 14, 1221,
+  data from luminous red galaxies in the Sloan Digital Sky Survey data
+  release seven*, RAA 14, 1221,
   [DOI:10.1088/1674-4527/14/10/002](https://doi.org/10.1088/1674-4527/14/10/002)
-- Moresco (2015), *Raising the bar: new constraints on H(z) at z~2*,
+- Moresco (2015), *Raising the bar: new constraints on the Hubble
+  parameter with cosmic chronometers at z~2*,
   [arXiv:1503.01116](https://arxiv.org/abs/1503.01116)
 - Moresco et al. (2016), *A 6% measurement of the Hubble parameter at
-  z~0.45*, [arXiv:1601.01701](https://arxiv.org/abs/1601.01701)
+  z~0.45: direct evidence of the epoch of cosmic re-acceleration*,
+  [arXiv:1601.01701](https://arxiv.org/abs/1601.01701)
 - Ratsimbazafy et al. (2017), *Age-dating luminous red galaxies observed
   with the Southern African Large Telescope*, MNRAS 467, 3239,
   [DOI:10.1093/mnras/stx301](https://doi.org/10.1093/mnras/stx301)
@@ -86,5 +92,5 @@ surveys, principally:
   [arXiv:2409.16952](https://arxiv.org/abs/2409.16952)
 
 The `DM_MW_ISM_(NE2001)` column is computed from the Galactic
-electron-density model of Cordes & Lazio (2003),
+electron-density model of Cordes & Lazio (2002),
 [arXiv:astro-ph/0207156](https://arxiv.org/abs/astro-ph/0207156) (NE2001).
