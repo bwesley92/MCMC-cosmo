@@ -13,7 +13,7 @@ package. Unlike nested sampling or thermodynamic integration, this estimator
 computes `lnZ` directly from an existing MCMC chain — no re-fitting, no
 additional likelihood evaluations — which makes it applicable as a
 post-processing step on the chains already produced under
-`Codes/GR-based-models/` and `Codes/MG-based-models/`.
+`Codes/MCMC-Models/GR-based/` and `Codes/MCMC-Models/MG-based/`.
 
 For each model, for both the Baseline (CC+SNe+BAO) and Baseline+FRB chains:
 
@@ -50,11 +50,11 @@ less reliable for parameters only weakly constrained by the data, e.g.
   Baseline+FRB chains; saves `evidence_<model>.txt` (human-readable) and
   `evidence_<model>.npz` (arrays `lnZ`, `sigma_lnZ`, `ndim`, `N_used`,
   `priorvolume`, for both datasets).
-- `BayesFactors_summary.ipynb` — loads all six `evidence_*.npz` files,
-  computes the Bayes factors relative to ΛCDM for both datasets, compares
-  the Baseline+FRB values against the BIC-based approximation from
-  `../AIC-BIC-LRT/model_comparison.txt`, and saves `BayesFactors_summary.txt`
-  / `.npz`.
+- `BayesFactors-Summary/BayesFactors_summary.ipynb` — loads all six
+  `evidence_*.npz` files, computes the Bayes factors relative to ΛCDM for
+  both datasets, compares the Baseline+FRB values against the BIC-based
+  approximation from `../AIC-BIC-LRT/model_comparison.txt`, and saves
+  `BayesFactors_summary.txt` / `.npz` alongside it.
 - `MCEvidence/` — the third-party kNN evidence-estimator package (MIT
   license), vendored so the evidence notebooks can `import` it directly;
   not modified from upstream.
@@ -62,11 +62,11 @@ less reliable for parameters only weakly constrained by the data, e.g.
 ## How to reproduce
 
 1. Run the relevant `*_CC_SNe_BAO.ipynb` and `*_CC_SNe_BAO_FRB.ipynb` chains
-   under `Codes/GR-based-models/` / `Codes/MG-based-models/` first (the
+   under `Codes/MCMC-Models/GR-based/` / `Codes/MCMC-Models/MG-based/` first (the
    evidence notebooks only read `flat_samples_*.npy` / `log_prob_*.npy`,
    they don't regenerate them).
 2. Run each `<Model>/<model>_evidence.ipynb`.
-3. Run `BayesFactors_summary.ipynb`.
+3. Run `BayesFactors-Summary/BayesFactors_summary.ipynb`.
 
 ## References
 
