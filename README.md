@@ -1,10 +1,21 @@
 # MCMC-cosmo
 
-Bayesian parameter estimation for cosmological models, using MCMC (`emcee`) to confront six expansion-history models against four observational probes — Cosmic Chronometers (CC), Type Ia Supernovae (Pantheon+SH0ES), DESI BAO DR2, and Fast Radio Burst (FRB) dispersion measures — individually and in combination, followed by a unified model comparison (AIC/BIC/LRT) and Figure-of-Merit analysis.
+Bayesian parameter estimation for six expansion-history models, using MCMC
+(`emcee`) to confront them against four observational probes — Cosmic
+Chronometers (CC), Type Ia Supernovae (Pantheon+SH0ES), DESI BAO DR2, and
+Fast Radio Burst (FRB) dispersion measures — individually and in every
+combination. Each fit is followed by a Figure-of-Merit analysis quantifying
+how much the FRB data tightens the constraints, and a report of the
+`Ωb·H0·f_d` combination that FRB dispersion measures directly probe. The
+resulting posterior chains are then compared across models (information
+criteria and direct Bayesian evidence), stress-tested against specific
+modeling assumptions, and the FRB likelihood implementation is
+independently cross-checked.
 
 ## Models
 
-**GR-based** (`Codes/GR-based-models/`) — standard dark-energy parametrizations on top of GR:
+**GR-based** (`Codes/MCMC-Models/GR-based/`) — standard dark-energy
+parametrizations on top of GR:
 
 | Model | Expansion history | Free parameters |
 |-------|--------------------|------------------|
@@ -12,7 +23,10 @@ Bayesian parameter estimation for cosmological models, using MCMC (`emcee`) to c
 | `wCDM` | Constant dark-energy EoS `w` | `H0`, `Ωm0`, `w` |
 | `CPL`  | Chevallier–Polarski–Linder: `w(z) = w0 + wa·z/(1+z)` | `H0`, `Ωm0`, `w0`, `wa` |
 
-**MG-based** (`Codes/MG-based-models/`) — `f(R)` modified-gravity models. `H(a)`/`yH(ln a)` is obtained by numerically solving the modified Friedmann ODE system (`scipy.integrate.solve_ivp`) rather than a closed-form `E(z)`, with a scalaron regularization scale `delta_s = 1e-7`:
+**MG-based** (`Codes/MCMC-Models/MG-based/`) — `f(R)` modified-gravity
+models. `H(a)`/`yH(ln a)` is obtained by numerically solving the modified
+Friedmann ODE system (`scipy.integrate.solve_ivp`) rather than a
+closed-form `E(z)`, with a scalaron regularization scale `delta_s = 1e-7`:
 
 | Model | `f(R)` form | Extra parameter |
 |-------|-------------|------------------|
@@ -20,51 +34,70 @@ Bayesian parameter estimation for cosmological models, using MCMC (`emcee`) to c
 | `Hu-Sawicki` (HS) | broken power law, `n = 1` | `mu_HS` (also saved reparametrized as `mu_HS/100` and `ln(mu_HS)` for prior/numerical-stability checks) |
 | `Starobinsky` (ST) | `n = 1` | `lbd` (Λ-scale parameter) |
 
+All six models additionally fit `Ωb`, `MB` (SNe absolute magnitude), and,
+whenever FRB data is included, `sigma_host` and `exp_mu` (host-galaxy DM
+log-normal nuisance parameters).
+
 ## Data (`Data/`)
 
+All four datasets below are third-party observational data, redistributed
+only for reproducibility; see `Data/README.md` for full citations and
+provenance of each.
+
 - `CC/CC_Hz_data.txt` — cosmic chronometer `H(z)` measurements with errors.
-- `SNe/Pantheon+SH0ES.dat` + `Pantheon+SH0ES_STAT+SYS.cov` — 1701 SNe Ia apparent magnitudes with full stat+sys covariance (a `z > 0.01` cut is applied before fitting).
-- `BAO/desi_gaussian_bao_ALL_GCcomb_mean.txt` + `..._cov.txt` — DESI DR2 Gaussianized BAO distance measurements and covariance.
-- `FRB/frb_catalog.txt` — FRB dispersion measures (`DM_obs`), Milky Way ISM + halo contributions, redshifts and host metadata, used to extract the extragalactic DM.
+- `SNe/Pantheon+SH0ES.dat` + `Pantheon+SH0ES_STAT+SYS.cov` — 1701 SNe Ia
+  apparent magnitudes with full stat+sys covariance (a `z > 0.01` cut is
+  applied before fitting).
+- `BAO/desi_gaussian_bao_ALL_GCcomb_mean.txt` + `..._cov.txt` — DESI DR2
+  Gaussianized BAO distance measurements and covariance.
+- `FRB/frb_catalog.txt` — 104 localized FRBs: observed dispersion measure
+  (`DM_obs`), Milky Way ISM contribution (NE2001 model), redshift, host
+  type, and reference. The Galactic halo and host-galaxy DM contributions
+  are treated as model parameters rather than read from the catalog (see
+  `Codes/MCMC-Models/README.md`).
 
-## Code layout (`Codes/`)
+## Analysis pipeline (`Codes/`)
 
-Each model directory (`LCDM`, `wCDM`, `CPL`, `Appleby-Battye`, `Hu-Sawicki`, `Starobinsky`) follows the same pattern:
-
-- `CC/`, `SNe/`, `BAO/`, `FRB/` — single-probe MCMC fits.
-- `CC_FRB/`, `BAO_FRB/`, `SNe_FRB/` — two-probe combinations with FRB.
-- `CC_SNe_BAO/` — the three "standard" probes combined.
-- `CC_SNe_BAO_FRB/` — full joint fit; also stores `log_prob_*.npy` alongside the chain.
-- `Corner/` (or `Corners/`) — overlaid corner plots comparing dataset combinations for that model, plus `stats_*_full.txt` with parameter constraints at 68% and 95% CL.
-- `FoM/` — Figure-of-Merit notebook: computes the inverse-area of the 2D highest-posterior-density contour (via Gaussian KDE) to quantify how much adding FRB data shrinks the `H0`–`Ωb` posterior.
-
-Each fit notebook saves its flattened chain as `flat_samples_*.npy` (and `log_prob_*.npy` for the full joint fits) plus a GetDist corner plot (`Corner_*.png`).
-
-`Codes/Model-comparison/AIC-BIC-LRT/Model_comparison.ipynb` builds a unified comparison table (`model_comparison.txt`) across all six models using the full `CC+SNe+BAO+FRB` fit: χ², AIC, BIC, ΔAIC/ΔBIC, an approximate Bayes factor (`lnBF ≈ -0.5·ΔBIC`), and a likelihood-ratio-test p-value, with verdicts against LCDM as the reference model. `Codes/Model-comparison/Bayesian-Evidence/` computes the direct k-NN Bayesian evidence (via the vendored `MCEvidence` package) and the resulting Bayes factors for cross-check.
+- **`MCMC-Models/`** — the primary analysis: one `emcee` fit per model per
+  dataset combination, plus, per model, a Figure-of-Merit notebook (area of
+  the 2D `H0`–`Ωb` credible region, with vs. without FRB data) and a report
+  of the marginalized `Ωb·H0·f_d` combination for the Baseline+FRB fit. See
+  `Codes/MCMC-Models/README.md` for the full per-model layout, output
+  conventions, and the interpolation-grid strategy used by the `f(R)`
+  models.
+- **`Model-comparison/`** — compares the six models' full-joint-fit
+  posteriors two ways: `AIC-BIC-LRT/` computes the information criteria
+  and a likelihood-ratio test; `Bayesian-Evidence/` computes a genuine
+  k-nearest-neighbour estimate of the Bayesian evidence (Heavens et al.
+  2017) directly from the chains, for a Bayes-factor cross-check of the
+  BIC-based approximation.
+- **`Robustness-test/`** — re-runs the Baseline+FRB fit for three
+  representative models under two relaxed assumptions (the fixed Galactic
+  dispersion-measure budget, and a possible hidden correlation between
+  Cosmic Chronometer measurements), to check whether the reported
+  constraints depend on them. See `Codes/Robustness-test/README.md`.
+- **`FRB-likelihood-verification/`** — an independent, from-scratch
+  reimplementation of the FRB likelihood, used to numerically confirm that
+  the production code is implemented identically across all six models
+  and correctly normalized. See `Codes/FRB-likelihood-verification/README.md`.
 
 ## Requirements
 
 ```bash
-pip install numpy pandas scipy matplotlib emcee getdist
+pip install numpy pandas scipy matplotlib emcee getdist scikit-learn
 ```
 
-MG-based notebooks additionally use `multiprocessing.Pool` for parallel walker evaluation and `scipy.interpolate.RegularGridInterpolator` to speed up repeated `H(z)` evaluations from precomputed grids (`H_array_*.npy`, `Hgrid_*.npz`).
+(`scikit-learn` is only needed for the Bayesian-evidence k-NN estimator in
+`Codes/Model-comparison/Bayesian-Evidence/`.)
 
 ## Usage
 
-Each analysis is a self-contained Jupyter notebook. Open the relevant notebook (e.g. `Codes/GR-based-models/LCDM/CC_SNe_BAO/LCDM_CC_SNe_BAO.ipynb`) and run all cells — it loads the data from `Data/`, runs the `emcee` sampler, and writes the chain, log-probability, and corner plot into its own directory.
+Each analysis is a self-contained Jupyter notebook. Open the relevant
+notebook (e.g. `Codes/MCMC-Models/GR-based/LCDM/CC_SNe_BAO/LCDM_CC_SNe_BAO.ipynb`)
+and run all cells — it loads the data from `Data/`, runs the `emcee`
+sampler, and writes the chain, log-probability, and corner plot into its
+own directory.
 
-**Note**: data paths in the notebooks are currently absolute (e.g. `/home/brunowesley/projetos/MCMC-cosmo/Data/CC/CC_Hz_data.txt`); update them if running from a different location.
-
-## Model comparison summary (CC + SNe + BAO + FRB)
-
-| Model | k | Δ AIC vs LCDM | Δ BIC vs LCDM | LRT vs LCDM |
-|-------|---|----------------|----------------|-------------|
-| LCDM | 6 | reference | reference | reference |
-| wCDM | 7 | −8.63 (strong for wCDM) | −3.17 (positive for wCDM) | p = 0.0011 |
-| CPL  | 8 | −7.06 (strong for CPL) | +3.86 (positive for LCDM) | not significant |
-| AB   | 7 | +2.26 (positive for LCDM) | +7.72 (strong for LCDM) | — |
-| HS   | 7 | −8.17 (strong for HS) | −2.70 (positive for HS) | p = 0.0014 |
-| ST   | 7 | −8.19 (strong for ST) | −2.72 (positive for ST) | p = 0.0014 |
-
-Full numbers are in `Codes/Model-comparison/AIC-BIC-LRT/model_comparison.txt`.
+**Note**: data paths in the notebooks are currently absolute (e.g.
+`/home/brunowesley/projetos/MCMC-cosmo/Data/CC/CC_Hz_data.txt`); update
+them if running from a different location.
