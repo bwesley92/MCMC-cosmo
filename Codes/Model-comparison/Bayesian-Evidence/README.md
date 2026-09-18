@@ -45,8 +45,8 @@ less reliable for parameters only weakly constrained by the data, e.g.
 
 ## Files
 
-- `<Model>/<model>_evidence.ipynb` (one per model: `AB`, `CPL`, `HS`, `LCDM`,
-  `ST`, `wCDM`) — runs the five steps above for that model's Baseline and
+- `<Model>/<model>_evidence.ipynb` (one per model: `LCDM`, `wCDM`, `CPL`, `AB`,
+  `HS`, `ST`) — runs the five steps above for that model's Baseline and
   Baseline+FRB chains; saves `evidence_<model>.txt` (human-readable) and
   `evidence_<model>.npz` (arrays `lnZ`, `sigma_lnZ`, `ndim`, `N_used`,
   `priorvolume`, for both datasets).
@@ -76,6 +76,3 @@ less reliable for parameters only weakly constrained by the data, e.g.
    the kNN evidence-estimator method used here.
 2. `MCEvidence` package: [github.com/yabebalFantaye/MCEvidence](https://github.com/yabebalFantaye/MCEvidence)
    — the reference implementation vendored in [`MCEvidence/`](./MCEvidence).
-3. Manuscript, Sec. "Model Comparison" (Table 10) — the reported
-   constraints and the discussion of the disagreement with the
-   BIC-based approximation.
