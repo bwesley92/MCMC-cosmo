@@ -66,11 +66,14 @@ provenance of each.
   conventions, and the interpolation-grid strategy used by the `f(R)`
   models.
 - **`Model-comparison/`** — compares the six models' full-joint-fit
-  posteriors two ways: `AIC-BIC-LRT/` computes the information criteria
-  and a likelihood-ratio test; `Bayesian-Evidence/` computes a genuine
-  k-nearest-neighbour estimate of the Bayesian evidence (Heavens et al.
-  2017) directly from the chains, for a Bayes-factor cross-check of the
-  BIC-based approximation.
+  posteriors three ways: `AIC-BIC-LRT/` computes the information criteria
+  and a likelihood-ratio test; `LRT-calibration/` calibrates the
+  likelihood-ratio test with a parametric bootstrap (5000 mock data sets
+  generated under the ΛCDM null), since Wilks' theorem does not apply to the
+  f(R) models (see `Codes/Model-comparison/LRT-calibration/README.md`);
+  `Bayesian-Evidence/` computes a genuine k-nearest-neighbour estimate of the
+  Bayesian evidence (Heavens et al. 2017) directly from the chains, for a
+  Bayes-factor cross-check of the BIC-based approximation.
 - **`Robustness-test/`** — re-runs the Baseline+FRB fit for three
   representative models under two relaxed assumptions (the fixed Galactic
   dispersion-measure budget, and a possible hidden correlation between

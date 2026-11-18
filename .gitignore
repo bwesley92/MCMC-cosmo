@@ -3,6 +3,7 @@
 
 # Not pushed to GitHub (manuscript text, referee material, reference PDFs)
 /Manuscript/
+/PRD-Template/
 
 # Regeneratable MCMC/analysis outputs (chains, grids, plots) — not needed
 # to run the code, only produced by running it
@@ -21,3 +22,6 @@ Codes/FRB-likelihood-verification/extracted_P_DM_ext_functions.txt
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# LRT-calibration: run log, regenerated on every run
+Codes/Model-comparison/LRT-calibration/run_mocks_*.log

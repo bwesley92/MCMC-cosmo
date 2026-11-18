@@ -1,0 +1,5 @@
+5000 mocks
+wCDM  Lobs= 10.727  N>=obs=   5/5000  p_emp=1.20e-03  p_Wilks(chi2_1)=1.06e-03  p_Chernoff=5.28e-04  P(L=0)=0.025  fit: nu=1.15 a=0.88 p_fit=6.19e-04  mean=0.987  q50/90/95/99=[0.46 2.6  3.79 6.67]  min=0.000
+CPL   Lobs= 11.145  N>=obs=  21/5000  p_emp=4.40e-03  p_Wilks(chi2_2)=3.80e-03  p_Chernoff=nan  P(L=0)=0.000  fit: nu=1.99 a=0.99 p_fit=3.64e-03  mean=1.977  q50/90/95/99=[1.4  4.48 5.83 9.34]  min=0.000
+HS    Lobs= 10.241  N>=obs=   3/5000  p_emp=8.00e-04  p_Wilks(chi2_1)=1.37e-03  p_Chernoff=6.87e-04  P(L=0)=0.260  fit: nu=1.09 a=0.65 p_fit=6.42e-05  mean=0.506  q50/90/95/99=[0.1  1.66 2.62 5.02]  min=-0.373
+ST    Lobs= 10.304  N>=obs=   3/5000  p_emp=8.00e-04  p_Wilks(chi2_1)=1.33e-03  p_Chernoff=6.64e-04  P(L=0)=0.491  fit: nu=1.29 a=0.76 p_fit=1.94e-04  mean=0.393  q50/90/95/99=[0.01 1.55 2.68 5.13]  min=-0.996
